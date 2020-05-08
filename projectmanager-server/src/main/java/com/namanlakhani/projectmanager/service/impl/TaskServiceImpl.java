@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import com.namanlakhani.projectmanager.dto.TaskDTO;
 import com.namanlakhani.projectmanager.entity.Task;
 import com.namanlakhani.projectmanager.repository.TaskRepository;
@@ -12,6 +14,7 @@ import com.namanlakhani.projectmanager.service.IProjectService;
 import com.namanlakhani.projectmanager.service.ITaskService;
 import com.namanlakhani.projectmanager.service.IUserService;
 
+@Service
 public class TaskServiceImpl implements ITaskService {
 
 	   private final TaskRepository taskRepository;

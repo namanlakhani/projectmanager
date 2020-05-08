@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.namanlakhani.projectmanager.dto.UserDTO;
 import com.namanlakhani.projectmanager.entity.User;
 
-@Service
+
 public interface IUserService {
     List<User> getAllUsers();
     User getUserById(Long userId);

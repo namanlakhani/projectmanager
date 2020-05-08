@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.namanlakhani.projectmanager.dto.ProjectDTO;
 import com.namanlakhani.projectmanager.entity.Project;
 
-@Service
+
 public interface IProjectService {
 
     List<Project> getAllProjects();

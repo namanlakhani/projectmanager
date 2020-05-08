@@ -3,11 +3,14 @@ package com.namanlakhani.projectmanager.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.namanlakhani.projectmanager.dto.UserDTO;
 import com.namanlakhani.projectmanager.entity.User;
 import com.namanlakhani.projectmanager.repository.UserRepository;
 import com.namanlakhani.projectmanager.service.IUserService;
 
+@Service
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;

@@ -3,11 +3,14 @@ package com.namanlakhani.projectmanager.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.namanlakhani.projectmanager.dto.ParentTaskDTO;
 import com.namanlakhani.projectmanager.entity.ParentTask;
 import com.namanlakhani.projectmanager.repository.ParentTaskRepository;
 import com.namanlakhani.projectmanager.service.IParentTaskService;
 
+@Service
 public class ParentTaskServiceImpl implements IParentTaskService{
 
 	private final ParentTaskRepository parentTaskRepository;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.namanlakhani.projectmanager.dto.TaskDTO;
 import com.namanlakhani.projectmanager.entity.Task;
 
-@Service
+
 public interface ITaskService {
     List<Task> getAllTasks();
     Task getTaskById(Long taskId);

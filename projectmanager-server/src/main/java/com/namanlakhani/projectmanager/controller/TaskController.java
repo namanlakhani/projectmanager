@@ -3,6 +3,7 @@ package com.namanlakhani.projectmanager.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,11 +23,13 @@ import com.namanlakhani.projectmanager.service.ITaskService;
 @RequestMapping("/projectmanager/tasks")
 public class TaskController {
 
-	final ITaskService taskService;
+	@Autowired
+	private ITaskService taskService;
 
-	public TaskController(ITaskService taskService) {
-		this.taskService = taskService;
-	}
+	/*
+	 * public TaskController(ITaskService taskService) { this.taskService =
+	 * taskService; }
+	 */
 
 	@GetMapping(path="/")
 	public ResponseEntity<Object> getAllTasks(){

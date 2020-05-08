@@ -2,6 +2,7 @@ package com.namanlakhani.projectmanager.controller;
 
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,12 +21,14 @@ import com.namanlakhani.projectmanager.service.IProjectService;
 @RestController
 @RequestMapping("/projectmanager/projects")
 public class ProjectController {
+	
+	@Autowired
+	private IProjectService projectService;
 
-	private final IProjectService projectService;
-
-	public ProjectController(IProjectService projectService) {
-		this.projectService = projectService;
-	}
+	/*
+	 * public ProjectController(IProjectService projectService) {
+	 * this.projectService = projectService; }
+	 */
 
 	@GetMapping(path = "/")
 	public ResponseEntity<Object> getAllProjects() {
