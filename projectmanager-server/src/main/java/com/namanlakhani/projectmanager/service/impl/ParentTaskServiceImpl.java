@@ -3,6 +3,7 @@ package com.namanlakhani.projectmanager.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.namanlakhani.projectmanager.dto.ParentTaskDTO;
@@ -13,11 +14,8 @@ import com.namanlakhani.projectmanager.service.IParentTaskService;
 @Service
 public class ParentTaskServiceImpl implements IParentTaskService{
 
-	private final ParentTaskRepository parentTaskRepository;
-
-	public ParentTaskServiceImpl(ParentTaskRepository parentTaskRepository) {
-	        this.parentTaskRepository = parentTaskRepository;
-	}
+	@Autowired
+	private ParentTaskRepository parentTaskRepository;
 	
 	@Override
 	public List<ParentTask> getAllParentTasks() {

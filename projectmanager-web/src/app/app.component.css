@@ -1,27 +1,13 @@
-h2 {
-    color:black;
-    text-align: center;
-    border-style: double;
-  
-  }
-  a {
-    color: black;
-    display: inline-block;
-    width:100%;
-    height:100%;
-    text-decoration: none;
-  }
-  
-  * {
+ * {
     font-family: "Trebuchet MS";
-    font-style: italic;
   }
   .active
   {
-    background-color: grey;
+    color: red!important;
   }
   #addTaskDiv,#viewTaskDiv, #addUserDiv, #addProjectDiv {
-    border-style: double;
-    border-color: black;
     text-align: center;
+  }
+  .d-flex{
+    color: #17a2b8!important;
   }

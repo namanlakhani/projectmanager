@@ -18,46 +18,65 @@ import com.namanlakhani.projectmanager.dto.UserDTO;
 import com.namanlakhani.projectmanager.entity.User;
 import com.namanlakhani.projectmanager.service.IUserService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/projectmanager/users")
 public class UserController {
-	
+
 	@Autowired
 	private IUserService userService;
 
-	/*
-	 * public UserController(IUserService userService) { this.userService =
-	 * userService; }
+	/**
+	 * Method for getting all Users
+	 * 
+	 * @return
 	 */
-
-	@GetMapping(path="/")
-	public ResponseEntity<Object> getAllUsers(){
+	@GetMapping(path = "/")
+	public ResponseEntity<Object> getAllUsers() {
 		List<User> userList = userService.getAllUsers();
-		List<UserDTO> userListDto = userList.stream().map(activeUser -> userService.getUserDto(activeUser)).collect(Collectors.toList());
+		List<UserDTO> userListDto = userList.stream().map(activeUser -> userService.getUserDto(activeUser))
+				.collect(Collectors.toList());
 		return new ResponseEntity<>(userListDto, HttpStatus.OK);
 	}
 
-	@PostMapping(path="/add")
+	/**
+	 * Method for Adding User
+	 * 
+	 * @param userDto
+	 * @return
+	 */
+
+	@PostMapping(path = "/add")
 	public ResponseEntity<Object> addUser(@RequestBody UserDTO userDto) {
 		User user = userService.getUser(userDto);
 		userService.addUser(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
-	@PutMapping(path="/update")
-	public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDto){
+
+	/**
+	 * Method for Updating User
+	 * 
+	 * @param userDto
+	 * @return
+	 */
+	@PutMapping(path = "/update")
+	public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDto) {
 		User user = userService.getUser(userDto);
 		userService.updateUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	@PostMapping(path="/delete")
-	public ResponseEntity<Object> deleteUser(@RequestBody UserDTO userDto){
+
+	/**
+	 * Method for Deleting User
+	 * 
+	 * @param userDto
+	 * @return
+	 */
+	@PostMapping(path = "/delete")
+	public ResponseEntity<Object> deleteUser(@RequestBody UserDTO userDto) {
 		User user = userService.getUser(userDto);
 		userService.deleteUser(user);
 		return new ResponseEntity<>(HttpStatus.OK);
-}
-	
+	}
 
 }

@@ -31,6 +31,7 @@ export class UserComponent implements OnInit {
 
   }
 
+  //Employee ID numeric check
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     this.errorMessage = "";
@@ -54,7 +55,7 @@ export class UserComponent implements OnInit {
 
     if(this.allUsers.filter(user => user.employeeId == this.user.employeeId && user.userId != this.user.userId).length > 0)
     {
-      this.errorMessage = "Employee Id: "+this.user.employeeId+". Already Exists!!";
+      this.errorMessage = "User with Employee Id: "+this.user.employeeId+". Already Present.";
       return false;
     }
     if(this.isEdit)
@@ -80,6 +81,7 @@ export class UserComponent implements OnInit {
 
   deleteUser(userData) {
     this.opUser = userData;
+    //Update user active status to false.
     this.opUser.active = false;
     this.userService.deleteUser(this.opUser)
       .subscribe(

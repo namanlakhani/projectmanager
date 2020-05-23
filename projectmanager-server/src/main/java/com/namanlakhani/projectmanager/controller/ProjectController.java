@@ -25,11 +25,6 @@ public class ProjectController {
 	@Autowired
 	private IProjectService projectService;
 
-	/*
-	 * public ProjectController(IProjectService projectService) {
-	 * this.projectService = projectService; }
-	 */
-
 	@GetMapping(path = "/")
 	public ResponseEntity<Object> getAllProjects() {
 		return new ResponseEntity<>(projectService.getAllProjects().stream()

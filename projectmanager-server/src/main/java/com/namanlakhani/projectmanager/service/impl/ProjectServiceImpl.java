@@ -3,6 +3,7 @@ package com.namanlakhani.projectmanager.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.namanlakhani.projectmanager.dto.ProjectDTO;
@@ -14,14 +15,11 @@ import com.namanlakhani.projectmanager.service.IUserService;
 @Service
 public class ProjectServiceImpl implements IProjectService {
 
-	private final ProjectRepository projectRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 
-	private final IUserService userService;
-
-	public ProjectServiceImpl(ProjectRepository projectRepository, IUserService userService) {
-		this.projectRepository = projectRepository;
-		this.userService = userService;
-	}
+	@Autowired
+	private IUserService userService;
 
 	@Override
 	public List<Project> getAllProjects() {

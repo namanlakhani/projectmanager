@@ -1,7 +1,4 @@
-.double {
-    border: double  black;
-  }
-  #viewtask tr:hover {background-color: #ddd;}
+#viewtask tr:hover {background-color: #ddd;}
   
   #viewtask th {
     padding-top: 12px;
@@ -31,22 +28,17 @@
   }
   * {
     font-family: "Trebuchet MS";
-    font-style: italic;
   }
   
   h4 {
-    color:black;
+    color:brown;
     text-align: center;
-    border: double black;
     width: 100%;
-    background: grey;
   }
   
   #cancelButton{
     margin-left: 25px;
     border-radius: 10px;
-    background-color:grey;
-    border-color: black;
     position: center;
     top: 90%;
     text-anchor: none;
@@ -55,8 +47,6 @@
   #selectProjectTask{
     margin-left: 100px;
     border-radius: 10px;
-    background-color:grey;
-    border-color: black;
     position: center;
     top: 90%;
   }
@@ -67,7 +57,6 @@
     margin: 10px;
     width : 75px;
     font-weight: bold;
-    font-style: italic;
   }
   
   label {
@@ -77,7 +66,6 @@
     margin-top: 10px;
     width : 100px;
     font-weight: bold;
-    font-style: italic;
   }
   
   .modelSelectInput
@@ -95,14 +83,17 @@
     margin: 25px 10px 25px 10px;
     width : 125px;
     font-weight: bold;
-    font-style: italic;
   }
   
+  hr.dotted {
+    border-top: 2px dotted #999;
+  }
+
   .green
   {
-    background-color: lightgreen;
+      background-color: lightgreen;
   }
   .red
   {
-    background-color: lightpink;
+      background-color: lightslategrey;
   }

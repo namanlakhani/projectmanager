@@ -3,26 +3,26 @@
       <label class="col-sm-2">Project</label>
       <input class="col-sm-2 search" type="text" id="searchByTask" value="{{projectDisplayName}}" name="searchByTask"
              placeholder="Search By Project" disabled="true">
-      <button type="button" (click)="openProjectSubModel(contentproject)" style="margin-left: 25px" class="glyphicon glyphicon-check">Search</button>
+      <button type="button" (click)="openProjectSubModel(contentproject)" style="margin-left: 25px" class="btn btn-info">Search</button>
     </div>
     <div class="row col-xs-12" >
       <div class="col-xs-2"><label style="padding: 5px!important; margin-top: 25px!important;">Sort Task By</label></div>
       <div class="col-xs-2"><button type="button" [ngClass]="{
               'green' : sortColumn === 'startDate' && sortIndicator,
               'red' : sortColumn === 'startDate' && !sortIndicator
-           }" class="sortButton glyphicon glyphicon-check" (click)="sortTask('startDate')">Start Date</button></div>
+           }" class="sortButton btn btn-info" (click)="sortTask('startDate')">Start Date</button></div>
       <div class="col-xs-2"><button type="button" [ngClass]="{
               'green' : sortColumn === 'endDate' && sortIndicator,
               'red' : sortColumn === 'endDate' && !sortIndicator
-           }" class="sortButton glyphicon glyphicon-check" (click)="sortTask('endDate')">End Date</button></div>
+           }" class="sortButton btn btn-info" (click)="sortTask('endDate')">End Date</button></div>
       <div class="col-xs-2"><button type="button" [ngClass]="{
               'green' : sortColumn === 'priority' && sortIndicator,
               'red' : sortColumn === 'priority' && !sortIndicator
-           }" class="sortButton glyphicon glyphicon-check" (click)="sortTask('priority')">Priority</button></div>
+           }" class="sortButton btn btn-info" (click)="sortTask('priority')">Priority</button></div>
       <div class="col-xs-2"><button type="button" [ngClass]="{
               'green' : sortColumn === 'completed' && sortIndicator,
               'red' : sortColumn === 'completed' && !sortIndicator
-           }" class="sortButton glyphicon glyphicon-check" (click)="sortTask('completed')">Completed</button></div>
+           }" class="sortButton btn btn-info" (click)="sortTask('completed')">Completed</button></div>
     </div>
   </div>
   <ul></ul>
@@ -48,10 +48,10 @@
         <td>{{ task.startDate | date : 'MM/dd/yyyy' }}</td>
         <td>{{ task.endDate | date : 'MM/dd/yyyy' }}</td>
         <td>
-          <button [disabled]="!task.status" (click)="updateTask(task.taskId)" type="button" class="glyphicon glyphicon-check">Edit</button>
+          <button [disabled]="!task.status" (click)="updateTask(task.taskId)" type="button" class="btn btn-success">Edit</button>
         </td>
         <td>
-          <button [disabled]="!task.status" type="button" (click)="endTask(task)" class="glyphicon glyphicon-check">End Task
+          <button [disabled]="!task.status" type="button" (click)="endTask(task)" class="btn btn-danger">End Task
           </button>
         </td>
       </tr>

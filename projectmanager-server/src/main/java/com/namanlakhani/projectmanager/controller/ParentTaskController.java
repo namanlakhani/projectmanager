@@ -26,11 +26,6 @@ public class ParentTaskController {
 	@Autowired
 	private IParentTaskService parentTaskService;
 
-	/*
-	 * public ParentTaskController(IParentTaskService parentTaskService) {
-	 * this.parentTaskService = parentTaskService; }
-	 */
-
     @GetMapping(path="/")
     public ResponseEntity<Object> getAllParentTasks(){
         List<ParentTask> parentTaskList = parentTaskService.getAllParentTasks();
