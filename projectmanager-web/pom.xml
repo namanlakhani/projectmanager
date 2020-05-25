@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>project-manager</artifactId>
-        <groupId>com.iiht</groupId>
+        <groupId>com.namanlakhani.projectmanager</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,8 +16,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
+               <configuration>
                     <filesets>
                         <fileset>
                             <directory>src/main/web/dist</directory>
@@ -34,8 +33,8 @@
                 <version>1.3</version>
 
                 <configuration>
-                    <nodeVersion>v8.11.3</nodeVersion>
-                    <npmVersion>6.3.0</npmVersion>
+                    <nodeVersion>v12.4.0</nodeVersion>
+                    <npmVersion>6.9.0</npmVersion>
                     <workingDirectory>src/main/web/</workingDirectory>
                 </configuration>
 
