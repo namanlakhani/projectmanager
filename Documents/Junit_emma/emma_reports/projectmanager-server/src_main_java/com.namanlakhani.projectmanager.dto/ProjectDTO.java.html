@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectDTO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 12:14:35 AM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.namanlakhani.projectmanager.dto</a> &gt; <span class="el_source">ProjectDTO.java</span></div><h1>ProjectDTO.java</h1><pre class="source lang-java linenums">package com.namanlakhani.projectmanager.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Date;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+<span class="fc" id="L7">public class ProjectDTO {</span>
+	
+    private Long projectId;
+    private String project;
+    private Date startDate;
+    private Date endDate;
+    private int priority;
+    private Long managerId;
+    private String managerName;
+    private Long managerEmployeeId;
+    private int noOfTasks;
+    private int noOfCompletedTasks;
+	/**
+	 * @return the projectId
+	 */
+	public Long getProjectId() {
+<span class="fc" id="L23">		return projectId;</span>
+	}
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(Long projectId) {
+<span class="fc" id="L29">		this.projectId = projectId;</span>
+<span class="fc" id="L30">	}</span>
+	/**
+	 * @return the project
+	 */
+	public String getProject() {
+<span class="fc" id="L35">		return project;</span>
+	}
+	/**
+	 * @param project the project to set
+	 */
+	public void setProject(String project) {
+<span class="fc" id="L41">		this.project = project;</span>
+<span class="fc" id="L42">	}</span>
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+<span class="fc" id="L47">		return startDate;</span>
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+<span class="fc" id="L53">		this.startDate = startDate;</span>
+<span class="fc" id="L54">	}</span>
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+<span class="fc" id="L59">		return endDate;</span>
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+<span class="fc" id="L65">		this.endDate = endDate;</span>
+<span class="fc" id="L66">	}</span>
+	/**
+	 * @return the priority
+	 */
+	public int getPriority() {
+<span class="fc" id="L71">		return priority;</span>
+	}
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(int priority) {
+<span class="fc" id="L77">		this.priority = priority;</span>
+<span class="fc" id="L78">	}</span>
+	/**
+	 * @return the managerId
+	 */
+	public Long getManagerId() {
+<span class="fc" id="L83">		return managerId;</span>
+	}
+	/**
+	 * @param managerId the managerId to set
+	 */
+	public void setManagerId(Long managerId) {
+<span class="fc" id="L89">		this.managerId = managerId;</span>
+<span class="fc" id="L90">	}</span>
+	/**
+	 * @return the managerName
+	 */
+	public String getManagerName() {
+<span class="fc" id="L95">		return managerName;</span>
+	}
+	/**
+	 * @param managerName the managerName to set
+	 */
+	public void setManagerName(String managerName) {
+<span class="fc" id="L101">		this.managerName = managerName;</span>
+<span class="fc" id="L102">	}</span>
+	/**
+	 * @return the managerEmployeeId
+	 */
+	public Long getManagerEmployeeId() {
+<span class="fc" id="L107">		return managerEmployeeId;</span>
+	}
+	/**
+	 * @param managerEmployeeId the managerEmployeeId to set
+	 */
+	public void setManagerEmployeeId(Long managerEmployeeId) {
+<span class="fc" id="L113">		this.managerEmployeeId = managerEmployeeId;</span>
+<span class="fc" id="L114">	}</span>
+	/**
+	 * @return the noOfTasks
+	 */
+	public int getNoOfTasks() {
+<span class="fc" id="L119">		return noOfTasks;</span>
+	}
+	/**
+	 * @param noOfTasks the noOfTasks to set
+	 */
+	public void setNoOfTasks(int noOfTasks) {
+<span class="fc" id="L125">		this.noOfTasks = noOfTasks;</span>
+<span class="fc" id="L126">	}</span>
+	/**
+	 * @return the noOfCompletedTasks
+	 */
+	public int getNoOfCompletedTasks() {
+<span class="fc" id="L131">		return noOfCompletedTasks;</span>
+	}
+	/**
+	 * @param noOfCompletedTasks the noOfCompletedTasks to set
+	 */
+	public void setNoOfCompletedTasks(int noOfCompletedTasks) {
+<span class="fc" id="L137">		this.noOfCompletedTasks = noOfCompletedTasks;</span>
+<span class="fc" id="L138">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 12:14:35 AM)</div></body></html>

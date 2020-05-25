@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TaskDTO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 12:14:35 AM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.namanlakhani.projectmanager.dto</a> &gt; <span class="el_source">TaskDTO.java</span></div><h1>TaskDTO.java</h1><pre class="source lang-java linenums">package com.namanlakhani.projectmanager.dto;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+<span class="fc" id="L8">public class TaskDTO {</span>
+
+	private Long taskId;
+	private String task;
+	private Date startDate;
+	private Date endDate;
+	private int priority;
+	private boolean status;
+	private Long userId;
+	private Long projectId;
+	private String project;
+	private Long parentId;
+	private String parentTask;
+	private String userName;
+	private Long userEmployeeId;
+	/**
+	 * @return the taskId
+	 */
+	public Long getTaskId() {
+<span class="fc" id="L27">		return taskId;</span>
+	}
+	/**
+	 * @param taskId the taskId to set
+	 */
+	public void setTaskId(Long taskId) {
+<span class="fc" id="L33">		this.taskId = taskId;</span>
+<span class="fc" id="L34">	}</span>
+	/**
+	 * @return the task
+	 */
+	public String getTask() {
+<span class="fc" id="L39">		return task;</span>
+	}
+	/**
+	 * @param task the task to set
+	 */
+	public void setTask(String task) {
+<span class="fc" id="L45">		this.task = task;</span>
+<span class="fc" id="L46">	}</span>
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+<span class="fc" id="L51">		return startDate;</span>
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+<span class="fc" id="L57">		this.startDate = startDate;</span>
+<span class="fc" id="L58">	}</span>
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+<span class="fc" id="L63">		return endDate;</span>
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+<span class="fc" id="L69">		this.endDate = endDate;</span>
+<span class="fc" id="L70">	}</span>
+	/**
+	 * @return the priority
+	 */
+	public int getPriority() {
+<span class="fc" id="L75">		return priority;</span>
+	}
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(int priority) {
+<span class="fc" id="L81">		this.priority = priority;</span>
+<span class="fc" id="L82">	}</span>
+	/**
+	 * @return the status
+	 */
+	public boolean isStatus() {
+<span class="fc" id="L87">		return status;</span>
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(boolean status) {
+<span class="fc" id="L93">		this.status = status;</span>
+<span class="fc" id="L94">	}</span>
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+<span class="fc" id="L99">		return userId;</span>
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Long userId) {
+<span class="fc" id="L105">		this.userId = userId;</span>
+<span class="fc" id="L106">	}</span>
+	/**
+	 * @return the projectId
+	 */
+	public Long getProjectId() {
+<span class="fc" id="L111">		return projectId;</span>
+	}
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(Long projectId) {
+<span class="fc" id="L117">		this.projectId = projectId;</span>
+<span class="fc" id="L118">	}</span>
+	/**
+	 * @return the project
+	 */
+	public String getProject() {
+<span class="fc" id="L123">		return project;</span>
+	}
+	/**
+	 * @param project the project to set
+	 */
+	public void setProject(String project) {
+<span class="fc" id="L129">		this.project = project;</span>
+<span class="fc" id="L130">	}</span>
+	/**
+	 * @return the parentId
+	 */
+	public Long getParentId() {
+<span class="fc" id="L135">		return parentId;</span>
+	}
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(Long parentId) {
+<span class="fc" id="L141">		this.parentId = parentId;</span>
+<span class="fc" id="L142">	}</span>
+	/**
+	 * @return the parentTask
+	 */
+	public String getParentTask() {
+<span class="fc" id="L147">		return parentTask;</span>
+	}
+	/**
+	 * @param parentTask the parentTask to set
+	 */
+	public void setParentTask(String parentTask) {
+<span class="fc" id="L153">		this.parentTask = parentTask;</span>
+<span class="fc" id="L154">	}</span>
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+<span class="fc" id="L159">		return userName;</span>
+	}
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+<span class="fc" id="L165">		this.userName = userName;</span>
+<span class="fc" id="L166">	}</span>
+	/**
+	 * @return the userEmployeeId
+	 */
+	public Long getUserEmployeeId() {
+<span class="fc" id="L171">		return userEmployeeId;</span>
+	}
+	/**
+	 * @param userEmployeeId the userEmployeeId to set
+	 */
+	public void setUserEmployeeId(Long userEmployeeId) {
+<span class="fc" id="L177">		this.userEmployeeId = userEmployeeId;</span>
+<span class="fc" id="L178">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 12:14:35 AM)</div></body></html>

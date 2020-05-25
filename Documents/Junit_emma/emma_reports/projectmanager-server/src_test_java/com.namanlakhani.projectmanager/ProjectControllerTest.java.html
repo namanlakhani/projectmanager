@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 12:14:35 AM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.namanlakhani.projectmanager</a> &gt; <span class="el_source">ProjectControllerTest.java</span></div><h1>ProjectControllerTest.java</h1><pre class="source lang-java linenums">package com.namanlakhani.projectmanager;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.namanlakhani.projectmanager.dto.ProjectDTO;
+import com.namanlakhani.projectmanager.entity.ParentTask;
+import com.namanlakhani.projectmanager.entity.Project;
+import com.namanlakhani.projectmanager.entity.Task;
+import com.namanlakhani.projectmanager.entity.User;
+import com.namanlakhani.projectmanager.repository.ParentTaskRepository;
+import com.namanlakhani.projectmanager.repository.ProjectRepository;
+import com.namanlakhani.projectmanager.repository.TaskRepository;
+import com.namanlakhani.projectmanager.repository.UserRepository;
+
+import junit.framework.TestCase;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = ProjectmanagerApplication.class)
+@ActiveProfiles(&quot;test&quot;)
+<span class="fc" id="L43">public class ProjectControllerTest extends TestCase {</span>
+
+    @LocalServerPort
+    private Integer port;
+    private String baseUrl;
+    private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ParentTaskRepository parentTaskRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+<span class="fc" id="L64">        super.setUp();</span>
+<span class="fc" id="L65">        baseUrl = &quot;http://localhost:&quot;.concat(port.toString()).concat(&quot;/projectmanager&quot;);</span>
+<span class="fc" id="L66">        testRestTemplate = new TestRestTemplate();</span>
+<span class="fc" id="L67">    }</span>
+
+
+    @Test
+    public void testProjectAdd() {
+
+<span class="fc" id="L73">        User user = new User();</span>
+<span class="fc" id="L74">        user.setUserActive(true);</span>
+<span class="fc" id="L75">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L76">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L77">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L78">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L80">        ProjectDTO ProjectDTO = new ProjectDTO();</span>
+<span class="fc" id="L81">        ProjectDTO.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L82">        ProjectDTO.setStartDate(new Date());</span>
+<span class="fc" id="L83">        ProjectDTO.setEndDate(new Date());</span>
+<span class="fc" id="L84">        ProjectDTO.setPriority(25);</span>
+<span class="fc" id="L85">        ProjectDTO.setManagerId(resultUser.getUserId());</span>
+
+<span class="fc" id="L87">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/projects/add&quot;), ProjectDTO, String.class);</span>
+<span class="fc" id="L88">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L89">    }</span>
+
+    @Test
+    public void testProjectAddWithProjectId() {
+
+<span class="fc" id="L94">        User user = new User();</span>
+<span class="fc" id="L95">        user.setUserActive(true);</span>
+<span class="fc" id="L96">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L97">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L98">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L99">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L101">        ProjectDTO ProjectDTO = new ProjectDTO();</span>
+<span class="fc" id="L102">        ProjectDTO.setProjectId(50L);</span>
+<span class="fc" id="L103">        ProjectDTO.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L104">        ProjectDTO.setStartDate(new Date());</span>
+<span class="fc" id="L105">        ProjectDTO.setEndDate(new Date());</span>
+<span class="fc" id="L106">        ProjectDTO.setPriority(25);</span>
+<span class="fc" id="L107">        ProjectDTO.setManagerId(resultUser.getUserId());</span>
+
+<span class="fc" id="L109">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/projects/add&quot;), ProjectDTO, String.class);</span>
+<span class="fc" id="L110">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L111">    }</span>
+
+    @Test
+    public void testProjectUpdate() {
+
+<span class="fc" id="L116">        User user = new User();</span>
+<span class="fc" id="L117">        user.setUserActive(true);</span>
+<span class="fc" id="L118">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L119">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L120">        user.setEmployeeId(689709L);</span>
+        /*Save the User &amp; Get Id*/
+<span class="fc" id="L122">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L124">        Project project = new Project();</span>
+<span class="fc" id="L125">        project.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L126">        project.setStartDate(new Date());</span>
+<span class="fc" id="L127">        project.setEndDate(new Date());</span>
+<span class="fc" id="L128">        project.setPriority(25);</span>
+<span class="fc" id="L129">        project.setUser(resultUser);</span>
+<span class="fc" id="L130">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L132">        ProjectDTO ProjectDTO = new ProjectDTO();</span>
+<span class="fc" id="L133">        ProjectDTO.setProjectId(resultProject.getProjectId());</span>
+<span class="fc" id="L134">        ProjectDTO.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L135">        ProjectDTO.setStartDate(new Date());</span>
+<span class="fc" id="L136">        ProjectDTO.setEndDate(new Date());</span>
+<span class="fc" id="L137">        ProjectDTO.setPriority(30);</span>
+<span class="fc" id="L138">        ProjectDTO.setManagerId(resultUser.getUserId());</span>
+
+<span class="fc" id="L140">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/projects/update&quot;), HttpMethod.PUT, new HttpEntity&lt;&gt;(ProjectDTO), String.class);</span>
+<span class="fc" id="L141">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L142">    }</span>
+
+    @Test
+    public void testProjectSuspend() {
+
+<span class="fc" id="L147">        User user = new User();</span>
+<span class="fc" id="L148">        user.setUserActive(true);</span>
+<span class="fc" id="L149">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L150">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L151">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L152">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L154">        Project project = new Project();</span>
+<span class="fc" id="L155">        project.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L156">        project.setStartDate(new Date());</span>
+<span class="fc" id="L157">        project.setEndDate(new Date());</span>
+<span class="fc" id="L158">        project.setPriority(25);</span>
+<span class="fc" id="L159">        project.setUser(resultUser);</span>
+<span class="fc" id="L160">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L162">        ProjectDTO ProjectDTO = new ProjectDTO();</span>
+<span class="fc" id="L163">        ProjectDTO.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L164">        ProjectDTO.setStartDate(new Date());</span>
+<span class="fc" id="L165">        ProjectDTO.setEndDate(new Date());</span>
+<span class="fc" id="L166">        ProjectDTO.setPriority(30);</span>
+<span class="fc" id="L167">        ProjectDTO.setManagerId(resultUser.getUserId());</span>
+<span class="fc" id="L168">        ProjectDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L170">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/projects/suspend&quot;), HttpMethod.PUT, new HttpEntity&lt;&gt;(ProjectDTO), String.class);</span>
+<span class="fc" id="L171">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L172">    }</span>
+
+    @Test
+    public void testProjectGetAll() throws Exception {
+
+<span class="fc" id="L177">        User user = new User();</span>
+<span class="fc" id="L178">        user.setUserActive(true);</span>
+<span class="fc" id="L179">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L180">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L181">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L182">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L184">        Project project = new Project();</span>
+<span class="fc" id="L185">        project.setProject(&quot;Junit TDD Project&quot;);</span>
+<span class="fc" id="L186">        project.setStartDate(new Date());</span>
+<span class="fc" id="L187">        project.setEndDate(new Date());</span>
+<span class="fc" id="L188">        project.setPriority(25);</span>
+<span class="fc" id="L189">        project.setUser(resultUser);</span>
+<span class="fc" id="L190">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L192">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L193">        parentTask.setParentTask(&quot;Junit TDD Parent Task&quot;);</span>
+<span class="fc" id="L194">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L196">        Task task = new Task();</span>
+<span class="fc" id="L197">        task.setTask(&quot;Scrum Meeting&quot;);</span>
+<span class="fc" id="L198">        task.setStatus(true);</span>
+<span class="fc" id="L199">        task.setPriority(22);</span>
+<span class="fc" id="L200">        task.setStartDate(new Date());</span>
+<span class="fc" id="L201">        task.setEndDate(new Date());</span>
+<span class="fc" id="L202">        task.setParentTask(resultParentTask);</span>
+<span class="fc" id="L203">        task.setUser(resultUser);</span>
+<span class="fc" id="L204">        task.setProject(resultProject);</span>
+<span class="fc" id="L205">        taskRepository.save(task);</span>
+
+<span class="fc" id="L207">        ResponseEntity&lt;String&gt; response = testRestTemplate.getForEntity(baseUrl.concat(&quot;/projects/&quot;), String.class);</span>
+<span class="fc" id="L208">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+
+<span class="fc" id="L210">        List&lt;ProjectDTO&gt; taskDto = convertJsonToProjectDTO(response.getBody());</span>
+<span class="fc" id="L211">        assertThat(taskDto.size(), equalTo(1));</span>
+<span class="fc" id="L212">    }</span>
+
+    @AfterEach
+    public void tearDown() throws Exception {
+<span class="fc" id="L216">        super.tearDown();</span>
+<span class="fc" id="L217">        baseUrl = null;</span>
+<span class="fc" id="L218">        testRestTemplate = null;</span>
+<span class="fc" id="L219">        taskRepository.deleteAll();</span>
+<span class="fc" id="L220">        projectRepository.deleteAll();</span>
+<span class="fc" id="L221">        userRepository.deleteAll();</span>
+<span class="fc" id="L222">        parentTaskRepository.deleteAll();</span>
+<span class="fc" id="L223">    }</span>
+
+    private List&lt;ProjectDTO&gt; convertJsonToProjectDTO(String json) throws Exception {
+<span class="fc" id="L226">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L227">        return mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, ProjectDTO.class));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 12:14:35 AM)</div></body></html>
