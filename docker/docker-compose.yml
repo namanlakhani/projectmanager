@@ -4,7 +4,7 @@ services:
    container_name: project-manager-app
    image: namanlakhani/project-manager-app:latest
    ports:
-     - "8000:8000"
+     - "8090:8090"
    depends_on:
      mysql:
        condition: service_healthy
