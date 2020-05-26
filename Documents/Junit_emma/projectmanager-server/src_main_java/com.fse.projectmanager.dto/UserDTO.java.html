@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserDTO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager.dto</a> &gt; <span class="el_source">UserDTO.java</span></div><h1>UserDTO.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+<span class="fc" id="L5">public class UserDTO {</span>
+	
+    private Long userId;
+    private String firstName;
+    private String lastName;
+    private Long employeeId;
+    private boolean active;
+	/**
+	 * @return the userId
+	 */
+	public Long getUserId() {
+<span class="fc" id="L16">		return userId;</span>
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Long userId) {
+<span class="fc" id="L22">		this.userId = userId;</span>
+<span class="fc" id="L23">	}</span>
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+<span class="fc" id="L28">		return firstName;</span>
+	}
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+<span class="fc" id="L34">		this.firstName = firstName;</span>
+<span class="fc" id="L35">	}</span>
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+<span class="fc" id="L40">		return lastName;</span>
+	}
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+<span class="fc" id="L46">		this.lastName = lastName;</span>
+<span class="fc" id="L47">	}</span>
+	/**
+	 * @return the employeeId
+	 */
+	public Long getEmployeeId() {
+<span class="fc" id="L52">		return employeeId;</span>
+	}
+	/**
+	 * @param employeeId the employeeId to set
+	 */
+	public void setEmployeeId(Long employeeId) {
+<span class="fc" id="L58">		this.employeeId = employeeId;</span>
+<span class="fc" id="L59">	}</span>
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+<span class="fc" id="L64">		return active;</span>
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+<span class="fc" id="L70">		this.active = active;</span>
+<span class="fc" id="L71">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>

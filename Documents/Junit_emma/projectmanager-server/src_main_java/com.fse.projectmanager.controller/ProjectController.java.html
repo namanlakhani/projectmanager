@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager.controller</a> &gt; <span class="el_source">ProjectController.java</span></div><h1>ProjectController.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager.controller;
+
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fse.projectmanager.dto.ProjectDTO;
+import com.fse.projectmanager.entity.Project;
+import com.fse.projectmanager.service.IProjectService;
+
+@CrossOrigin(origins = { &quot;http://localhost:4200&quot; })
+@RestController
+@RequestMapping(&quot;/projectmanager/projects&quot;)
+<span class="fc" id="L23">public class ProjectController {</span>
+	
+	@Autowired
+	private IProjectService projectService;
+
+	@GetMapping(path = &quot;/&quot;)
+	public ResponseEntity&lt;Object&gt; getAllProjects() {
+<span class="fc" id="L30">		return new ResponseEntity&lt;&gt;(projectService.getAllProjects().stream()</span>
+<span class="fc" id="L31">				.map(project -&gt; projectService.getProjectDTO(project)).collect(Collectors.toList()), HttpStatus.OK);</span>
+	}
+
+	@PostMapping(path = &quot;/add&quot;)
+	public ResponseEntity&lt;Object&gt; addProject(@RequestBody ProjectDTO projectDto) {
+<span class="fc" id="L36">		Project project = projectService.getProject(projectDto);</span>
+<span class="fc" id="L37">		projectService.addProject(project);</span>
+<span class="fc" id="L38">		return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+	}
+
+	@PutMapping(path = &quot;/update&quot;)
+	public ResponseEntity&lt;Object&gt; updateProject(@RequestBody ProjectDTO projectDto) {
+<span class="fc" id="L43">		Project project = projectService.getProject(projectDto);</span>
+<span class="fc" id="L44">		projectService.updateProject(project);</span>
+<span class="fc" id="L45">		return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+	}
+
+	@PutMapping(path = &quot;/suspend&quot;)
+	public ResponseEntity&lt;Object&gt; suspendProject(@RequestBody ProjectDTO projectDto) {
+<span class="fc" id="L50">		Project project = projectService.getProject(projectDto);</span>
+<span class="fc" id="L51">		projectService.suspendProject(project);</span>
+<span class="fc" id="L52">		return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>

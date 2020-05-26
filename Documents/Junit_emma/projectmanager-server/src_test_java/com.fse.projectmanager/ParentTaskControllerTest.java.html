@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParentTaskControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager</a> &gt; <span class="el_source">ParentTaskControllerTest.java</span></div><h1>ParentTaskControllerTest.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fse.projectmanager.ProjectmanagerApplication;
+import com.fse.projectmanager.dto.ParentTaskDTO;
+import com.fse.projectmanager.entity.ParentTask;
+import com.fse.projectmanager.repository.ParentTaskRepository;
+
+import junit.framework.TestCase;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = ProjectmanagerApplication.class)
+@ActiveProfiles(&quot;test&quot;)
+<span class="fc" id="L35">public class ParentTaskControllerTest extends TestCase {</span>
+
+    @LocalServerPort
+    private Integer port;
+    private String baseUrl;
+    private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private ParentTaskRepository parentTaskRepository;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+<span class="fc" id="L47">        super.setUp();</span>
+<span class="fc" id="L48">        baseUrl = &quot;http://localhost:&quot;.concat(port.toString()).concat(&quot;/projectmanager/&quot;);</span>
+<span class="fc" id="L49">        testRestTemplate = new TestRestTemplate();</span>
+<span class="fc" id="L50">    }</span>
+
+
+    @Test
+    public void testParentTaskGetAll() throws Exception {
+
+<span class="fc" id="L56">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L57">        parentTask.setParentTask(&quot;Junit Task for TDD&quot;);</span>
+<span class="fc" id="L58">        parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L60">        ResponseEntity&lt;String&gt; response = testRestTemplate.getForEntity(baseUrl.concat(&quot;parenttasks/&quot;), String.class);</span>
+<span class="fc" id="L61">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+
+<span class="fc" id="L63">        List&lt;ParentTaskDTO&gt; taskDto = convertJsonToParentTaskDTO(response.getBody());</span>
+<span class="fc" id="L64">        assertThat(taskDto.size(), equalTo(1));</span>
+<span class="fc" id="L65">    }</span>
+
+    @Test
+    public void testParentTaskAdd() {
+<span class="fc" id="L69">        ParentTaskDTO ParentTaskDTO = new ParentTaskDTO();</span>
+<span class="fc" id="L70">        ParentTaskDTO.setParentTask(&quot;Junit Task for TDD&quot;);</span>
+<span class="fc" id="L71">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;parenttasks/add&quot;), ParentTaskDTO, String.class);</span>
+<span class="fc" id="L72">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L73">    }</span>
+
+    @Test
+    public void testParentTaskAddWithParentTaskId() {
+<span class="fc" id="L77">        ParentTaskDTO ParentTaskDTO = new ParentTaskDTO();</span>
+<span class="fc" id="L78">        ParentTaskDTO.setParentId(50L);</span>
+<span class="fc" id="L79">        ParentTaskDTO.setParentTask(&quot;Junit Task for TDD&quot;);</span>
+<span class="fc" id="L80">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;parenttasks/add&quot;), ParentTaskDTO, String.class);</span>
+<span class="fc" id="L81">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L82">    }</span>
+
+    @AfterEach
+    public void tearDown() throws Exception {
+<span class="fc" id="L86">        super.tearDown();</span>
+<span class="fc" id="L87">        baseUrl = null;</span>
+<span class="fc" id="L88">        testRestTemplate = null;</span>
+<span class="fc" id="L89">        parentTaskRepository.deleteAll();</span>
+<span class="fc" id="L90">    }</span>
+
+    private List&lt;ParentTaskDTO&gt; convertJsonToParentTaskDTO(String json) throws Exception {
+<span class="fc" id="L93">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L94">        return mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, ParentTaskDTO.class));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>

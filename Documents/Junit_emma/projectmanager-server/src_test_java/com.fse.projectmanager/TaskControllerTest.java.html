@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TaskControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager</a> &gt; <span class="el_source">TaskControllerTest.java</span></div><h1>TaskControllerTest.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fse.projectmanager.ProjectmanagerApplication;
+import com.fse.projectmanager.dto.TaskDTO;
+import com.fse.projectmanager.entity.ParentTask;
+import com.fse.projectmanager.entity.Project;
+import com.fse.projectmanager.entity.Task;
+import com.fse.projectmanager.entity.User;
+import com.fse.projectmanager.repository.ParentTaskRepository;
+import com.fse.projectmanager.repository.ProjectRepository;
+import com.fse.projectmanager.repository.TaskRepository;
+import com.fse.projectmanager.repository.UserRepository;
+
+import junit.framework.TestCase;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = ProjectmanagerApplication.class)
+@ActiveProfiles(&quot;test&quot;)
+<span class="fc" id="L44">public class TaskControllerTest extends TestCase{</span>
+
+
+	@LocalServerPort
+	private Integer port;
+    private String baseUrl;
+    private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ParentTaskRepository parentTaskRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+<span class="fc" id="L66">        super.setUp();</span>
+<span class="fc" id="L67">        baseUrl = &quot;http://localhost:&quot;.concat(port.toString()).concat(&quot;/projectmanager&quot;);</span>
+<span class="fc" id="L68">        testRestTemplate = new TestRestTemplate();</span>
+<span class="fc" id="L69">    }</span>
+
+
+    @Test
+    public void testTaskAdd() {
+
+<span class="fc" id="L75">        User user = new User();</span>
+<span class="fc" id="L76">        user.setUserActive(true);</span>
+<span class="fc" id="L77">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L78">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L79">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L80">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L82">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L83">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L84">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L86">        Project project = new Project();</span>
+<span class="fc" id="L87">        project.setProject(&quot;FSE S1 Certification Project&quot;);</span>
+<span class="fc" id="L88">        project.setStartDate(new Date());</span>
+<span class="fc" id="L89">        project.setEndDate(new Date());</span>
+<span class="fc" id="L90">        project.setPriority(25);</span>
+<span class="fc" id="L91">        project.setUser(resultUser);</span>
+<span class="fc" id="L92">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L94">        TaskDTO TaskDTO = new TaskDTO();</span>
+<span class="fc" id="L95">        TaskDTO.setTask(&quot;Create RTM&quot;);</span>
+<span class="fc" id="L96">        TaskDTO.setStatus(true);</span>
+<span class="fc" id="L97">        TaskDTO.setPriority(22);</span>
+<span class="fc" id="L98">        TaskDTO.setStartDate(new Date());</span>
+<span class="fc" id="L99">        TaskDTO.setEndDate(new Date());</span>
+<span class="fc" id="L100">        TaskDTO.setParentId(resultParentTask.getParentId());</span>
+<span class="fc" id="L101">        TaskDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L102">        TaskDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L104">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/tasks/add&quot;), TaskDTO, String.class);</span>
+<span class="fc" id="L105">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L106">    }</span>
+
+    @Test
+    public void testTaskAddWithTaskId() {
+
+<span class="fc" id="L111">        User user = new User();</span>
+<span class="fc" id="L112">        user.setUserActive(true);</span>
+<span class="fc" id="L113">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L114">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L115">        user.setEmployeeId(689709L);</span>
+        /*Save the User &amp; Get Id*/
+<span class="fc" id="L117">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L119">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L120">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L121">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L123">        Project project = new Project();</span>
+<span class="fc" id="L124">        project.setProject(&quot;Mcdonals Project&quot;);</span>
+<span class="fc" id="L125">        project.setStartDate(new Date());</span>
+<span class="fc" id="L126">        project.setEndDate(new Date());</span>
+<span class="fc" id="L127">        project.setPriority(25);</span>
+<span class="fc" id="L128">        project.setUser(resultUser);</span>
+<span class="fc" id="L129">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L131">        TaskDTO TaskDTO = new TaskDTO();</span>
+<span class="fc" id="L132">        TaskDTO.setTaskId(50L);</span>
+<span class="fc" id="L133">        TaskDTO.setTask(&quot;Setup AWS Gateway&quot;);</span>
+<span class="fc" id="L134">        TaskDTO.setStatus(true);</span>
+<span class="fc" id="L135">        TaskDTO.setPriority(22);</span>
+<span class="fc" id="L136">        TaskDTO.setStartDate(new Date());</span>
+<span class="fc" id="L137">        TaskDTO.setEndDate(new Date());</span>
+<span class="fc" id="L138">        TaskDTO.setParentId(resultParentTask.getParentId());</span>
+<span class="fc" id="L139">        TaskDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L140">        TaskDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L142">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/tasks/add&quot;), TaskDTO, String.class);</span>
+<span class="fc" id="L143">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L144">    }</span>
+
+    @Test
+    public void testTaskUpdate() {
+
+<span class="fc" id="L149">        User user = new User();</span>
+<span class="fc" id="L150">        user.setUserActive(true);</span>
+<span class="fc" id="L151">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L152">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L153">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L154">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L156">        Project project = new Project();</span>
+<span class="fc" id="L157">        project.setProject(&quot;Farmer Union Project&quot;);</span>
+<span class="fc" id="L158">        project.setStartDate(new Date());</span>
+<span class="fc" id="L159">        project.setEndDate(new Date());</span>
+<span class="fc" id="L160">        project.setPriority(25);</span>
+<span class="fc" id="L161">        project.setUser(resultUser);</span>
+<span class="fc" id="L162">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L164">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L165">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L166">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L168">        Task task = new Task();</span>
+<span class="fc" id="L169">        task.setTask(&quot;Setup Scrum Meeting&quot;);</span>
+<span class="fc" id="L170">        task.setStatus(true);</span>
+<span class="fc" id="L171">        task.setPriority(22);</span>
+<span class="fc" id="L172">        task.setStartDate(new Date());</span>
+<span class="fc" id="L173">        task.setEndDate(new Date());</span>
+<span class="fc" id="L174">        task.setParentTask(resultParentTask);</span>
+<span class="fc" id="L175">        task.setUser(resultUser);</span>
+<span class="fc" id="L176">        task.setProject(resultProject);</span>
+<span class="fc" id="L177">        taskRepository.save(task);</span>
+
+<span class="fc" id="L179">        TaskDTO TaskDTO = new TaskDTO();</span>
+<span class="fc" id="L180">        TaskDTO.setTask(&quot;Setup Scrum Meeting&quot;);</span>
+<span class="fc" id="L181">        TaskDTO.setStatus(true);</span>
+<span class="fc" id="L182">        TaskDTO.setPriority(28);</span>
+<span class="fc" id="L183">        TaskDTO.setStartDate(new Date());</span>
+<span class="fc" id="L184">        TaskDTO.setEndDate(new Date());</span>
+<span class="fc" id="L185">        TaskDTO.setParentId(resultParentTask.getParentId());</span>
+<span class="fc" id="L186">        TaskDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L187">        TaskDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L189">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/tasks/update&quot;), HttpMethod.PUT, new HttpEntity&lt;&gt;(TaskDTO), String.class);</span>
+<span class="fc" id="L190">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L191">    }</span>
+
+    @Test
+    public void testTaskEnd() {
+
+
+<span class="fc" id="L197">        User user = new User();</span>
+<span class="fc" id="L198">        user.setUserActive(true);</span>
+<span class="fc" id="L199">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L200">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L201">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L202">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L204">        Project project = new Project();</span>
+<span class="fc" id="L205">        project.setProject(&quot;FSE S1 Certification Project&quot;);</span>
+<span class="fc" id="L206">        project.setStartDate(new Date());</span>
+<span class="fc" id="L207">        project.setEndDate(new Date());</span>
+<span class="fc" id="L208">        project.setPriority(25);</span>
+<span class="fc" id="L209">        project.setUser(resultUser);</span>
+<span class="fc" id="L210">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L212">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L213">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L214">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L216">        Task task = new Task();</span>
+<span class="fc" id="L217">        task.setTask(&quot;Setup Scrum Meeting&quot;);</span>
+<span class="fc" id="L218">        task.setStatus(true);</span>
+<span class="fc" id="L219">        task.setPriority(20);</span>
+<span class="fc" id="L220">        task.setStartDate(new Date());</span>
+<span class="fc" id="L221">        task.setEndDate(new Date());</span>
+<span class="fc" id="L222">        task.setParentTask(resultParentTask);</span>
+<span class="fc" id="L223">        task.setUser(resultUser);</span>
+<span class="fc" id="L224">        task.setProject(resultProject);</span>
+<span class="fc" id="L225">        taskRepository.save(task);</span>
+
+<span class="fc" id="L227">        TaskDTO TaskDTO = new TaskDTO();</span>
+<span class="fc" id="L228">        TaskDTO.setTask(&quot;Setup Scrum Meeting&quot;);</span>
+<span class="fc" id="L229">        TaskDTO.setStatus(false);</span>
+<span class="fc" id="L230">        TaskDTO.setPriority(28);</span>
+<span class="fc" id="L231">        TaskDTO.setStartDate(new Date());</span>
+<span class="fc" id="L232">        TaskDTO.setEndDate(new Date());</span>
+<span class="fc" id="L233">        TaskDTO.setParentId(resultParentTask.getParentId());</span>
+<span class="fc" id="L234">        TaskDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L235">        TaskDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L237">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/tasks/end&quot;), HttpMethod.PUT, new HttpEntity&lt;&gt;(TaskDTO), String.class);</span>
+<span class="fc" id="L238">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L239">    }</span>
+
+    @Test
+    public void testGetAllTask() throws Exception {
+
+<span class="fc" id="L244">        User user = new User();</span>
+<span class="fc" id="L245">        user.setUserActive(true);</span>
+<span class="fc" id="L246">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L247">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L248">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L249">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L251">        Project project = new Project();</span>
+<span class="fc" id="L252">        project.setProject(&quot;IIM project&quot;);</span>
+<span class="fc" id="L253">        project.setStartDate(new Date());</span>
+<span class="fc" id="L254">        project.setEndDate(new Date());</span>
+<span class="fc" id="L255">        project.setPriority(25);</span>
+<span class="fc" id="L256">        project.setUser(resultUser);</span>
+<span class="fc" id="L257">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L259">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L260">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L261">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L263">        Task task = new Task();</span>
+<span class="fc" id="L264">        task.setTask(&quot;PPT Creation&quot;);</span>
+<span class="fc" id="L265">        task.setStatus(true);</span>
+<span class="fc" id="L266">        task.setPriority(22);</span>
+<span class="fc" id="L267">        task.setStartDate(new Date());</span>
+<span class="fc" id="L268">        task.setEndDate(new Date());</span>
+<span class="fc" id="L269">        task.setParentTask(resultParentTask);</span>
+<span class="fc" id="L270">        task.setUser(resultUser);</span>
+<span class="fc" id="L271">        task.setProject(resultProject);</span>
+<span class="fc" id="L272">        taskRepository.save(task);</span>
+
+<span class="fc" id="L274">        ResponseEntity&lt;String&gt; response = testRestTemplate.getForEntity(baseUrl.concat(&quot;/tasks/&quot;), String.class);</span>
+<span class="fc" id="L275">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+
+<span class="fc" id="L277">        List&lt;TaskDTO&gt; TaskDTO = convertJsonToTaskDTO(response.getBody());</span>
+<span class="fc" id="L278">        assertThat(TaskDTO.size(), equalTo(1));</span>
+<span class="fc" id="L279">    }</span>
+
+    @Test
+    public void testGetTaskByProject() throws Exception {
+
+<span class="fc" id="L284">        User user = new User();</span>
+<span class="fc" id="L285">        user.setUserActive(true);</span>
+<span class="fc" id="L286">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L287">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L288">        user.setEmployeeId(689709L);</span>
+        /*Save the User &amp; Get Id*/
+<span class="fc" id="L290">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L292">        Project project = new Project();</span>
+<span class="fc" id="L293">        project.setProject(&quot;IIT KGP MS S1&quot;);</span>
+<span class="fc" id="L294">        project.setStartDate(new Date());</span>
+<span class="fc" id="L295">        project.setEndDate(new Date());</span>
+<span class="fc" id="L296">        project.setPriority(25);</span>
+<span class="fc" id="L297">        project.setUser(resultUser);</span>
+<span class="fc" id="L298">        Project resultProject = projectRepository.save(project);</span>
+
+<span class="fc" id="L300">        ParentTask parentTask = new ParentTask();</span>
+<span class="fc" id="L301">        parentTask.setParentTask(&quot;Junit TDD Task&quot;);</span>
+<span class="fc" id="L302">        ParentTask resultParentTask = parentTaskRepository.save(parentTask);</span>
+
+<span class="fc" id="L304">        Task task = new Task();</span>
+<span class="fc" id="L305">        task.setTask(&quot;Drone Setup&quot;);</span>
+<span class="fc" id="L306">        task.setStatus(true);</span>
+<span class="fc" id="L307">        task.setPriority(22);</span>
+<span class="fc" id="L308">        task.setStartDate(new Date());</span>
+<span class="fc" id="L309">        task.setEndDate(new Date());</span>
+<span class="fc" id="L310">        task.setParentTask(resultParentTask);</span>
+<span class="fc" id="L311">        task.setUser(resultUser);</span>
+<span class="fc" id="L312">        task.setProject(resultProject);</span>
+<span class="fc" id="L313">        taskRepository.save(task);</span>
+
+<span class="fc" id="L315">        TaskDTO TaskDTO = new TaskDTO();</span>
+<span class="fc" id="L316">        TaskDTO.setProjectId(resultProject.getProjectId());</span>
+
+<span class="fc" id="L318">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/tasks/projecttask&quot;), TaskDTO, String.class);</span>
+<span class="fc" id="L319">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+
+<span class="fc" id="L321">        List&lt;TaskDTO&gt; TaskDTOByProject = convertJsonToTaskDTO(response.getBody());</span>
+<span class="fc" id="L322">        assertThat(TaskDTOByProject.size(), equalTo(1));</span>
+<span class="fc" id="L323">    }</span>
+
+    @AfterEach
+    public void tearDown() throws Exception {
+<span class="fc" id="L327">        super.tearDown();</span>
+<span class="fc" id="L328">        baseUrl = null;</span>
+<span class="fc" id="L329">        testRestTemplate = null;</span>
+<span class="fc" id="L330">        taskRepository.deleteAll();</span>
+<span class="fc" id="L331">        projectRepository.deleteAll();</span>
+<span class="fc" id="L332">        parentTaskRepository.deleteAll();</span>
+<span class="fc" id="L333">        userRepository.deleteAll();</span>
+<span class="fc" id="L334">    }</span>
+
+    private List&lt;TaskDTO&gt; convertJsonToTaskDTO(String json) throws Exception {
+<span class="fc" id="L337">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L338">        return mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, TaskDTO.class));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>

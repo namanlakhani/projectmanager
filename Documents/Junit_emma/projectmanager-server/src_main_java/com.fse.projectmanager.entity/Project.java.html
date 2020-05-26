@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Project.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager.entity</a> &gt; <span class="el_source">Project.java</span></div><h1>Project.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager.entity;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = &quot;project&quot;)
+<span class="fc" id="L20">public class Project {</span>
+
+	@Id
+	@Column(name = &quot;project_id&quot;)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long projectId;
+	
+	@Column(name = &quot;project&quot;)
+	private String project;
+	
+	@Column(name = &quot;start_date&quot;)
+	private Date startDate;
+	
+	@Column(name = &quot;end_date&quot;)
+	private Date endDate;
+	
+	@Column(name = &quot;priority&quot;)
+	private int priority;
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = &quot;user_id&quot;)
+	private User user;
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn(name = &quot;project_id&quot;)
+	private List&lt;Task&gt; tasks;
+
+	/**
+	 * @return the projectId
+	 */
+	public Long getProjectId() {
+<span class="fc" id="L51">		return projectId;</span>
+	}
+
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(Long projectId) {
+<span class="fc" id="L58">		this.projectId = projectId;</span>
+<span class="fc" id="L59">	}</span>
+
+	/**
+	 * @return the project
+	 */
+	public String getProject() {
+<span class="fc" id="L65">		return project;</span>
+	}
+
+	/**
+	 * @param project the project to set
+	 */
+	public void setProject(String project) {
+<span class="fc" id="L72">		this.project = project;</span>
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+<span class="fc" id="L79">		return startDate;</span>
+	}
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+<span class="fc" id="L86">		this.startDate = startDate;</span>
+<span class="fc" id="L87">	}</span>
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+<span class="fc" id="L93">		return endDate;</span>
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+<span class="fc" id="L100">		this.endDate = endDate;</span>
+<span class="fc" id="L101">	}</span>
+
+	/**
+	 * @return the priority
+	 */
+	public int getPriority() {
+<span class="fc" id="L107">		return priority;</span>
+	}
+
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(int priority) {
+<span class="fc" id="L114">		this.priority = priority;</span>
+<span class="fc" id="L115">	}</span>
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+<span class="fc" id="L121">		return user;</span>
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+<span class="fc" id="L128">		this.user = user;</span>
+<span class="fc" id="L129">	}</span>
+
+	/**
+	 * @return the tasks
+	 */
+	public List&lt;Task&gt; getTasks() {
+<span class="fc" id="L135">		return tasks;</span>
+	}
+
+	/**
+	 * @param tasks the tasks to set
+	 */
+	public void setTasks(List&lt;Task&gt; tasks) {
+<span class="nc" id="L142">		this.tasks = tasks;</span>
+<span class="nc" id="L143">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>

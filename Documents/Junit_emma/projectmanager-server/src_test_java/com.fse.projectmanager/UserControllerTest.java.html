@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">projectmanager-server (May 26, 2020 4:42:37 PM)</a> &gt; <a href="../../index.html" class="el_group">projectmanager-server</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.fse.projectmanager</a> &gt; <span class="el_source">UserControllerTest.java</span></div><h1>UserControllerTest.java</h1><pre class="source lang-java linenums">package com.fse.projectmanager;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fse.projectmanager.ProjectmanagerApplication;
+import com.fse.projectmanager.dto.UserDTO;
+import com.fse.projectmanager.entity.User;
+import com.fse.projectmanager.repository.UserRepository;
+
+import junit.framework.TestCase;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = ProjectmanagerApplication.class)
+@ActiveProfiles(&quot;test&quot;)
+<span class="fc" id="L37">public class UserControllerTest extends TestCase{</span>
+
+	@LocalServerPort
+	private Integer port;
+    private String baseUrl;
+    private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+<span class="fc" id="L49">        super.setUp();</span>
+<span class="fc" id="L50">        baseUrl = &quot;http://localhost:&quot;.concat(port.toString()).concat(&quot;/projectmanager&quot;);</span>
+<span class="fc" id="L51">        testRestTemplate = new TestRestTemplate();</span>
+<span class="fc" id="L52">    }</span>
+
+    @Test
+    public void testUserAdd() {
+<span class="fc" id="L56">        UserDTO UserDTO = new UserDTO();</span>
+<span class="fc" id="L57">        UserDTO.setActive(true);</span>
+<span class="fc" id="L58">        UserDTO.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L59">        UserDTO.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L60">        UserDTO.setEmployeeId(689709L);</span>
+<span class="fc" id="L61">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/users/add&quot;), UserDTO, String.class);</span>
+<span class="fc" id="L62">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L63">    }</span>
+
+    @Test
+    public void testUserAddWithUserId() {
+<span class="fc" id="L67">        UserDTO UserDTO = new UserDTO();</span>
+<span class="fc" id="L68">        UserDTO.setUserId(50L);</span>
+<span class="fc" id="L69">        UserDTO.setActive(true);</span>
+<span class="fc" id="L70">        UserDTO.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L71">        UserDTO.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L72">        UserDTO.setEmployeeId(689709L);</span>
+<span class="fc" id="L73">        ResponseEntity&lt;String&gt; response = testRestTemplate.postForEntity(baseUrl.concat(&quot;/users/add&quot;), UserDTO, String.class);</span>
+<span class="fc" id="L74">        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));</span>
+<span class="fc" id="L75">    }</span>
+
+    @Test
+    public void testUserUpdate() {
+<span class="fc" id="L79">        User user = new User();</span>
+<span class="fc" id="L80">        user.setUserActive(true);</span>
+<span class="fc" id="L81">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L82">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L83">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L84">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L86">        UserDTO UserDTO = new UserDTO();</span>
+<span class="fc" id="L87">        UserDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L88">        UserDTO.setActive(true);</span>
+<span class="fc" id="L89">        UserDTO.setLastName(&quot;Rohit&quot;);</span>
+<span class="fc" id="L90">        UserDTO.setFirstName(&quot;Lalwani&quot;);</span>
+<span class="fc" id="L91">        UserDTO.setEmployeeId(689709L);</span>
+
+<span class="fc" id="L93">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/users/update&quot;), HttpMethod.PUT, new HttpEntity&lt;&gt;(UserDTO), String.class);</span>
+<span class="fc" id="L94">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L95">    }</span>
+
+    @Test
+    public void testUserDelete() {
+<span class="fc" id="L99">        User user = new User();</span>
+<span class="fc" id="L100">        user.setUserActive(true);</span>
+<span class="fc" id="L101">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L102">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L103">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L104">        User resultUser = userRepository.save(user);</span>
+
+<span class="fc" id="L106">        UserDTO UserDTO = new UserDTO();</span>
+<span class="fc" id="L107">        UserDTO.setUserId(resultUser.getUserId());</span>
+<span class="fc" id="L108">        UserDTO.setActive(false);</span>
+<span class="fc" id="L109">        UserDTO.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L110">        UserDTO.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L111">        UserDTO.setEmployeeId(689709L);</span>
+
+<span class="fc" id="L113">        ResponseEntity&lt;String&gt; response = testRestTemplate.exchange(baseUrl.concat(&quot;/users/delete&quot;), HttpMethod.POST, new HttpEntity&lt;&gt;(UserDTO), String.class);</span>
+<span class="fc" id="L114">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+<span class="fc" id="L115">    }</span>
+
+
+
+    @Test
+    public void testUserGetAll() throws Exception {
+<span class="fc" id="L121">        User user = new User();</span>
+<span class="fc" id="L122">        user.setUserActive(true);</span>
+<span class="fc" id="L123">        user.setLastName(&quot;Naman&quot;);</span>
+<span class="fc" id="L124">        user.setFirstName(&quot;Lakhani&quot;);</span>
+<span class="fc" id="L125">        user.setEmployeeId(689709L);</span>
+<span class="fc" id="L126">        userRepository.save(user);</span>
+
+<span class="fc" id="L128">        User inactiveUser = new User();</span>
+<span class="fc" id="L129">        inactiveUser.setUserActive(false);</span>
+<span class="fc" id="L130">        inactiveUser.setLastName(&quot;Rahul&quot;);</span>
+<span class="fc" id="L131">        inactiveUser.setFirstName(&quot;Sharma&quot;);</span>
+<span class="fc" id="L132">        inactiveUser.setEmployeeId(889922L);</span>
+<span class="fc" id="L133">        userRepository.save(inactiveUser);</span>
+
+<span class="fc" id="L135">        ResponseEntity&lt;String&gt; response = testRestTemplate.getForEntity(baseUrl.concat(&quot;/users/&quot;), String.class);</span>
+<span class="fc" id="L136">        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span>
+
+<span class="fc" id="L138">        List&lt;UserDTO&gt; taskDto = convertJsonToUserDTO(response.getBody());</span>
+<span class="fc" id="L139">        assertThat(taskDto.size(), equalTo(2));</span>
+<span class="fc" id="L140">    }</span>
+
+    @AfterEach
+    public void tearDown() throws Exception {
+<span class="fc" id="L144">        super.tearDown();</span>
+<span class="fc" id="L145">        baseUrl = null;</span>
+<span class="fc" id="L146">        testRestTemplate = null;</span>
+<span class="fc" id="L147">        userRepository.deleteAll();</span>
+<span class="fc" id="L148">    }</span>
+
+    private List&lt;UserDTO&gt; convertJsonToUserDTO(String json) throws Exception {
+<span class="fc" id="L151">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L152">        return mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, UserDTO.class));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>projectmanager-server (May 26, 2020 4:42:37 PM)</div></body></html>
