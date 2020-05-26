@@ -29,18 +29,6 @@ pipeline {
 			bat "mvn clean install sonar:sonar"
 		   }
 	   }
-	   stage('Publish Junit Report & Archive') {
-		   steps {
-				archiveArtifacts artifacts: 'projectmanager-server/target/*.jar', fingerprint: true
-				junit '**/TEST-*.xml'
-			        step([$class: 'JacocoPublisher', 
-				      execPattern: '**/*.exec',
-				      classPattern: '**/classes',
-				      sourcePattern: '**/src/main/java',
-				      exclusionPattern: '**/src/test*'
-				])
-		   }
-		}
 	   stage('Build Docker Image') {
 		   steps {
 			bat 'docker system prune --all --force --volumes'

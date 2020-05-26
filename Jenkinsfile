@@ -27,19 +27,8 @@ pipeline {
 	   stage('Build & Analyse') {
 		   steps {
 			bat "mvn clean install"
+			echo 'Build succeeded'
 		   }
 	   }
-	   stage('Publish Junit Report & Archive') {
-		   steps {
-				archiveArtifacts artifacts: 'projectmanager-server/target/*.jar', fingerprint: true
-				junit '**/TEST-*.xml'
-			        step([$class: 'JacocoPublisher', 
-				      execPattern: '**/*.exec',
-				      classPattern: '**/classes',
-				      sourcePattern: '**/src/main/java',
-				      exclusionPattern: '**/src/test*'
-				])
-		   }
-		}
 	}
 }
