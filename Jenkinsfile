@@ -26,7 +26,7 @@ pipeline {
 
 	   stage('Build & Analyse') {
 		   steps {
-			bat "mvn clean install sonar:sonar"
+			bat "mvn clean install"
 		   }
 	   }
 	   stage('Publish Junit Report & Archive') {
