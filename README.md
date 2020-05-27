@@ -1,5 +1,6 @@
 # Project Manager Application - Final SBA Certification - IIHT - FSD: Naman Lakhani
 
+Application running on VM - `http://localhost:8090` using docker image.
 
 <h4>projectmanager-server - contains the REST end-points for application </h4>
 <h4>projectmanager-web - contains the angular cli code for application</h4>
@@ -7,7 +8,7 @@
 Repo: https://github.com/namanlakhani/projectmanager.git
 
 _Prerequisite_
-1. MySQL Server should be up and running and should have database named projectmanager
+1. MySQL Server should be up and running for local and should have database named projectmanager. Docker will create its own mysql image.
 2. Should have JRE installed
 3. [Optional]: Jenkins setup is optional
 4. [Optional]: docker setup if running in docker container
