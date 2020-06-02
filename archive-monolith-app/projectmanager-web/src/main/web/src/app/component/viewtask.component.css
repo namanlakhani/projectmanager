@@ -1,0 +1,99 @@
+#viewtask tr:hover {background-color: #ddd;}
+  
+  #viewtask th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: grey;
+    color: white;
+  }
+  input {
+    color:black;
+  }
+  label {
+    color: black;
+  }
+  .search {
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 4px;
+  }
+  
+  button
+  {
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 4px;
+  }
+  * {
+    font-family: "Trebuchet MS";
+  }
+  
+  h4 {
+    color:brown;
+    text-align: center;
+    width: 100%;
+  }
+  
+  #cancelButton{
+    margin-left: 25px;
+    border-radius: 10px;
+    position: center;
+    top: 90%;
+    text-anchor: none;
+  }
+  
+  #selectProjectTask{
+    margin-left: 100px;
+    border-radius: 10px;
+    position: center;
+    top: 90%;
+  }
+  
+  .modelLabel{
+    color: black;
+    float: left;
+    margin: 10px;
+    width : 75px;
+    font-weight: bold;
+  }
+  
+  label {
+    color: black;
+    float: left;
+    margin-left: 25px;
+    margin-top: 10px;
+    width : 100px;
+    font-weight: bold;
+  }
+  
+  .modelSelectInput
+  {
+    color:black;
+    box-sizing: border-box;
+    border: 2px solid black ;
+    border-radius: 4px;
+    width: 150px !important;
+  }
+  
+  .sortButton
+  {
+    float: left;
+    margin: 25px 10px 25px 10px;
+    width : 125px;
+    font-weight: bold;
+  }
+  
+  hr.dotted {
+    border-top: 2px dotted #999;
+  }
+
+  .green
+  {
+      background-color: lightgreen;
+  }
+  .red
+  {
+      background-color: lightslategrey;
+  }

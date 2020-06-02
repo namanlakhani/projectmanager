@@ -1,0 +1,13 @@
+ * {
+    font-family: "Trebuchet MS";
+  }
+  .active
+  {
+    color: red!important;
+  }
+  #addTaskDiv,#viewTaskDiv, #addUserDiv, #addProjectDiv {
+    text-align: center;
+  }
+  .d-flex{
+    color: #17a2b8!important;
+  }
