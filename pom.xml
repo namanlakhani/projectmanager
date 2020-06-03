@@ -29,10 +29,10 @@
 	<modules>
 		<module>discovery-server</module>
 		<module>api-gateway</module>
-		<module>user-service</module>
-		<module>parenttask-service</module>
-		<module>project-service</module>
-		<module>task-service</module>
+		<module>projectmanager-user-service</module>
+		<module>projectmanager-parenttask-service</module>
+		<module>projectmanager-project-service</module>
+		<module>projectmanager-task-service</module>
 	</modules>
 
 	<dependencyManagement>

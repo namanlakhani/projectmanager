@@ -26,7 +26,7 @@ pipeline {
 
 	   stage('Build & Analyse') {
 		   steps {
-			bat "mvn clean install"
+			bat "mvn clean install -DskipTests"
 		   }
 	   }
 	   stage('Build Docker Image') {
