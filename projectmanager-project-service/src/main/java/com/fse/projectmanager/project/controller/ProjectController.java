@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ import com.fse.projectmanager.project.entity.Project;
 import com.fse.projectmanager.project.entity.User;
 import com.fse.projectmanager.project.service.IProjectService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/projectmanager/projects")
 public class ProjectController {
@@ -35,6 +36,13 @@ public class ProjectController {
 		return new ResponseEntity<>(projectService.getAllProjects().stream()
 				.map(project -> projectService.getProjectDTO(project)).collect(Collectors.toList()), HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getProject(@PathVariable("id") Long id) {
+		Project project = projectService.getProjectById(id);
+		return new ResponseEntity<>(project, HttpStatus.OK);
+	}
+
 
 	@PostMapping(path = "/add")
 	public ResponseEntity<Object> addProject(@RequestBody ProjectDTO projectDto) {

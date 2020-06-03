@@ -1,0 +1,60 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+            - OPTIONS
+            - PATCH
+      routes:
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/projectmanager/users/**
+        filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin Access-Control-Allow-Headers
+#        - AddResponseHeader=Access-Control-Allow-Origin, *
+      - id: consumerModule
+        uri: lb://PROJECT-SERVICE
+        predicates:
+        - Path=/projectmanager/projects/**
+        filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin Access-Control-Allow-Headers
+#        - AddResponseHeader=Access-Control-Allow-Origin, *
+      - id: user-service
+        uri: lb://PARENTTASK-SERVICE
+        predicates:
+        - Path=/projectmanager/parenttasks/**
+        filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin Access-Control-Allow-Headers
+#        - AddResponseHeader=Access-Control-Allow-Origin, *
+      - id: consumerModule
+        uri: lb://TASK-SERVICE
+        predicates:
+        - Path=/projectmanager/tasks/**
+        filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin Access-Control-Allow-Headers
+#        - AddResponseHeader=Access-Control-Allow-Origin, *
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+

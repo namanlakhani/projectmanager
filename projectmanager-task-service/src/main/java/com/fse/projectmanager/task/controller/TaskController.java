@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ import com.fse.projectmanager.task.entity.Task;
 import com.fse.projectmanager.task.entity.User;
 import com.fse.projectmanager.task.service.ITaskService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/projectmanager/tasks")
 public class TaskController {
@@ -39,6 +39,18 @@ public class TaskController {
 		List<TaskDTO> taskDtoList = taskList.stream().map(task -> taskService.getTaskDTO(task)).collect(Collectors.toList());
 		return new ResponseEntity<>(taskDtoList, HttpStatus.OK);
 	}
+	
+	/**
+	 * Method for getting Task by id
+	 * 
+	 * @return
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getProject(@PathVariable("id") Long id) {
+		Task task = taskService.getTaskById(id);
+		return new ResponseEntity<>(task, HttpStatus.OK);
+	}
+	
 	@PostMapping(path="/projecttask")
 	public ResponseEntity<Object> getTaskByProject(@RequestBody TaskDTO taskDto){
 		List<Task> taskList = taskService.getTasksByProjectId(taskDto.getProjectId());

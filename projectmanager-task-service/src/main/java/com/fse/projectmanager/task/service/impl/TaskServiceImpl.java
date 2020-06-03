@@ -20,13 +20,6 @@ public class TaskServiceImpl implements ITaskService {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	/*
-	 * @Autowired private IParentTaskService parentTaskService;
-	 * 
-	 * @Autowired private IProjectService projectService;
-	 * 
-	 * @Autowired private IUserService userService;
-	 */
 	@Override
 	public List<Task> getAllTasks() {
 		return taskRepository.findAll();

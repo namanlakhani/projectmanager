@@ -1,0 +1,108 @@
+version: '3'
+services:
+
+  discovery:
+    image: namanlakhani/discovery-server
+    container_name: discovery-server
+    build:
+      context: ./discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+
+  gateway:
+    image: namanlakhani/api-gateway
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - discovery
+    links:
+      - discovery:discovery
+      
+  user-service:
+    image: namanlakhani/user-service
+    container_name: user-service
+    build:
+      context: ./projectmanager-user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8013:2222"
+    depends_on:
+      - discovery
+      mysql:
+        condition: service_healthy
+    links:
+      - discovery:discovery
+
+  parenttask-service:
+    image: namanlakhani/parenttask-service
+    container_name: parenttask-service
+    build:
+      context: ./projectmanager-parenttask-service
+      dockerfile: Dockerfile
+    ports:
+      - "8010:2222"
+    depends_on:
+      - discovery
+      mysql:
+        condition: service_healthy
+    links:
+      - discovery:discovery
+
+  project-service:
+    image: namanlakhani/project-service
+    container_name: project-service
+    build:
+      context: ./projectmanager-project-service
+      dockerfile: Dockerfile
+    ports:
+      - "8011:2222"
+    depends_on:
+      - discovery
+      - user-service
+      mysql:
+        condition: service_healthy
+    links:
+      - discovery:discovery
+      - user-service:user-service
+
+  task-service:
+    image: namanlakhani/task-service
+    container_name: task-service
+    build:
+      context: ./projectmanager-task-service
+      dockerfile: Dockerfile
+    ports:
+      - "8012:2222"
+    depends_on:
+      - discovery
+      - user-service
+      - project-service
+      - parenttask-service
+      mysql:
+        condition: service_healthy
+    links:
+      - discovery:discovery
+      - user-service:user-service
+      - project-service:project:service
+      - parenttask-service:parenttask-service
+
+  mysql:
+      container_name: mysql-docker
+      image: mysql/mysql-server:latest
+      environment:
+        MYSQL_DATABASE: projectmanager
+        MYSQL_ROOT_PASSWORD: pass@word1
+        MYSQL_ROOT_HOST: '%'
+      ports:
+        - "3306:3306"
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        interval: 10s
+        timeout: 20s
+        retries: 20
+      restart: always
