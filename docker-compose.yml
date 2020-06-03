@@ -2,20 +2,14 @@ version: '3'
 services:
 
   discovery:
-    image: namanlakhani/discovery-server
+    image: namanlakhani/discovery-server:latest
     container_name: discovery-server
-    build:
-      context: ./discovery-server
-      dockerfile: Dockerfile
     ports:
       - "8761:8761"
 
   gateway:
-    image: namanlakhani/api-gateway
+    image: namanlakhani/api-gateway:latest
     container_name: api-gateway
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
     ports:
       - "8090:8090"
     depends_on:
@@ -24,58 +18,43 @@ services:
       - discovery:discovery
       
   user-service:
-    image: namanlakhani/user-service
+    image: namanlakhani/user-service:latest
     container_name: user-service
-    build:
-      context: ./projectmanager-user-service
-      dockerfile: Dockerfile
     ports:
       - "8013:2222"
     depends_on:
       - discovery
-      mysql:
-        condition: service_healthy
+      - mysql
     links:
       - discovery:discovery
 
   parenttask-service:
-    image: namanlakhani/parenttask-service
+    image: namanlakhani/parenttask-service:latest
     container_name: parenttask-service
-    build:
-      context: ./projectmanager-parenttask-service
-      dockerfile: Dockerfile
     ports:
       - "8010:2222"
     depends_on:
       - discovery
-      mysql:
-        condition: service_healthy
+      - mysql
     links:
       - discovery:discovery
 
   project-service:
-    image: namanlakhani/project-service
+    image: namanlakhani/project-service:latest
     container_name: project-service
-    build:
-      context: ./projectmanager-project-service
-      dockerfile: Dockerfile
     ports:
       - "8011:2222"
     depends_on:
       - discovery
       - user-service
-      mysql:
-        condition: service_healthy
+      - mysql
     links:
       - discovery:discovery
       - user-service:user-service
 
   task-service:
-    image: namanlakhani/task-service
+    image: namanlakhani/task-service:latest
     container_name: task-service
-    build:
-      context: ./projectmanager-task-service
-      dockerfile: Dockerfile
     ports:
       - "8012:2222"
     depends_on:
@@ -83,12 +62,11 @@ services:
       - user-service
       - project-service
       - parenttask-service
-      mysql:
-        condition: service_healthy
+      - mysql
     links:
       - discovery:discovery
       - user-service:user-service
-      - project-service:project:service
+      - project-service:project-service
       - parenttask-service:parenttask-service
 
   mysql:
