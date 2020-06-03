@@ -46,7 +46,6 @@ pipeline {
 		       withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			   bat 'docker login -u "%USERNAME%"  -p "%PASSWORD%"'
 		       }
-		bat 'docker push namanlakhani/project-manager-app:latest'
 		bat 'docker push namanlakhani/discovery-server:latest'
 		bat 'docker push namanlakhani/api-gateway:latest'
 		bat 'docker push namanlakhani/user-service:latest'
