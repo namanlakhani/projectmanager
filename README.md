@@ -1,58 +1,46 @@
 # Project Manager Application - Final SBA Certification - IIHT - FSD: Naman Lakhani
 
-Application running on VM - `http://localhost:8090` using docker image.
-
-<h4>projectmanager-server - contains the REST end-points for application </h4>
-<h4>projectmanager-web - contains the angular cli code for application</h4>
+Application running on VM - `http://localhost:4200` which is UI point to cloud api gateway `http://localhost:8090` using docker container.
 
 Repo: https://github.com/namanlakhani/projectmanager.git
 
-_Prerequisite_
-1. MySQL Server should be up and running for local and should have database named projectmanager. Docker will create its own mysql image.
-2. Should have JRE installed
-3. [Optional]: Jenkins setup is optional
-4. [Optional]: docker setup if running in docker container
+## There are four microservices:
 
-_Building Application_
+- **user-service**
+- **parenttask-service**
+- **project-service**
+- **task-service**
 
-[Local Build]
-1. projectmanager-server -> mvn clean install
-2. projectmanager-web -> npm install
+## There are two microservices using netflix OSS and spring cloud repo
+- **api-gateway** : **Spring Cloud API gateway** is used for gateway service.
+- **discovery-server**  : **Netflix Eureka** is used for discovery service.
 
-[Without Docker]
-1. Configure Jenkins Pipeline Job with scripts from SCM
-2. Refer Git URL and Script name in job (Jenkinsfile)
-3. Application will be build and artifact will be saved in the CI Server
+### Gateways ###
 
-[With Docker]
-1. Configure Jenkins Pipeline Job with scripts from SCM.
-2. Refer Git URL and Script name in job (Jenkinsfile).
-3. Jenkins file will call Dockerfile and corresponding docker-compose down and up call.
-4. Project Manager Application instance will be started in CI server
+URI for gateway : *http://localhost:8090*
+Eureka Dashboard: *http://localhost:8761*
 
-_Running the Application_
+## Build & Run
+CI/CD
+- *> Jennkis Pipeline is setup in VM with git hook on commits. 
+Manual
+- *>mvn clean install* : to build 
+- *>docker-compose up* --build : build docker images and containers and run containers
+- *>docker-compose stop* : stop the dockerized services
+- Each maven module has a Dockerfile.
 
-[Local]
-Locally front and back-end can be run seperately
-1. projectmanager-server -> springboot:run
-2. projectmanager-web -> npm start
-3. Access the application by hitting `http://localhost:4200` 
+In docker-compose.yml file:
 
-[Without Docker - Packaged]
-1. Use command `java -jar project-manager-app.jar`
-2. Application will be running in 8090 port
-3. Access the application by hitting `http://localhost:8090` 
-
-[With Docker]
-1. Goto folder "docker" and Use command `docker-compose -f docker-compose.yml up -d`
-2. Application will be running in 8090 port in dokcer container
-3. Access the application by hitting `http://localhost:8090` 
+- Parenttask Service : **__2222__** port is mapped to **__8010__** port of host
+- Project Service : **__2222__** port is mapped to **__8011__** port of host
+- User Service : **__2222__** port is mapped to **__8013__** port of host
+- Task Service : **__2222__** port is mapped to **__8012__** port of host
+- Eureka Discovery Service : **__8761__** port is mapped to **__8761__** port of host
+- Spring API Cloud Gateway Service : **__8090__** port is mapped to **__8762__** port of host  
 
 [Documentation and Reports]
 1. Junit and Emma code coverage reports available in Documents folder
 2. Jenkins will be running on `http://localhost:9000`
 3. JMeter Load Run Script available in Documents folder
 4. XAMPP MySQL Server is used for development purpose
-6. npm goal is added to maven hence UI will be packaged in to same application as that of service
-7. Application Screenshots available in Documents folder.
-8. docker folder contains Jenkins and docker file for deployment
+5. Application Screenshots available in Documents folder.
